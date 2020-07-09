@@ -1,16 +1,58 @@
-<!-- <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#new-headphone-modal">New headphone</button>
+<button class="btn btn-info mb-3" (click)="open()">
+  <i class="fa fa-plus"></i> New headphone
+</button>
 
-<div class="modal fade" id="new-headphone-modal">
-  <div class="modal-dialog">
+<div class="modal fade" id="new-headphone-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-heading">New headphone</h3>
+        <h3 class="modal-heading">Add new headphone</h3>
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div class="modal-body"></div>
-      <div class="modal-body">
-        <button class="btn btn-secondary">Close</button>
+      <div class="modal-body row">
+        <div class="form-group col-sm-6">
+          <label for="">Model number</label><span *ngIf="modelNumber.touched && !modelNumber.valid"
+            class="text-danger">Invalid number</span>
+          <input type="text" [formControl]="modelNumber" maxlength="40" id="" class="form-control">
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="">Dimensions</label><span *ngIf="productDimensions.touched && !productDimensions.valid"
+            class="text-danger">Required</span>
+          <input type="text" [formControl]="productDimensions" maxlength="40" id="" class="form-control">
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="">Weight</label><b>(oz)</b><span *ngIf="weight.touched && !weight.valid"
+            class="text-danger">Invalid weight</span>
+          <input type="text" [formControl]="weight" maxlength="40" class="form-control">
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="">Manufacturer</label><span *ngIf="manufacturer.touched && !manufacturer.valid"
+            class="text-danger">Required</span>
+          <input type="text" [formControl]="manufacturer" maxlength="40" class="form-control">
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="">ASIN</label><span *ngIf="asin.touched && !asin.valid" class="text-danger">Invalid
+            ASIN</span>
+          <input type="text" [formControl]="asin" maxlength="40" class="form-control">
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="">Batteries type</label><span *ngIf="batteriesType.touched && !batteriesType.valid"
+            class="text-danger">Required</span>
+          <input type="text" [formControl]="batteriesType" maxlength="40" class="form-control">
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="">Date first available</label><span *ngIf="date.touched && !date.valid"
+            class="text-danger">Required</span>
+          <input type="date" [formControl]="date" id="" class="form-control">
+        </div>
+      </div>
+      <div class="modal-body text-right">
+        <button class="btn btn-secondary mr-2" (click)="closeModal()">Close</button>
+        <button class="btn btn-success" (click)="save()">Save</button>
+
       </div>
     </div>
   </div>
-</div> -->
-<button mat-raised-button color="primary" class="mb-3"><i class="fa fa-plus"></i> New headphone</button>
+</div>
