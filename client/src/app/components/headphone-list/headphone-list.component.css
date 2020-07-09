@@ -10,3 +10,18 @@ table {
 .sm-input {
   width: 150px;
 }
+
+.table-body {
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.table-header,
+.table-footer {
+  font-weight: bold;
+}
+
+.custom-tr {
+  border-bottom: solid 1px #ccc;
+}

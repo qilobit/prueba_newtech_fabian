@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Headphone } from 'src/app/models/headphone.model';
 import { FormControl, Validators } from '@angular/forms';
+import { HeadphonesService } from 'src/app/services/headphones.service';
 
 @Component({
   selector: 'headphone-list',
@@ -9,32 +10,45 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class HeadphoneListComponent implements OnInit {
   headphones: Headphone[] = [];
-  displayedColumns = ['id', 'item_model_number', 'item_weight', 'date_first_available', 'asin'];
+  currentShowingHeadphones: Headphone[] = [];
+  paginationData: PaginationData = {
+    currentPage: 1,
+    itemsPerPage: 10,
+    totalItems: 0
+  };
+
   editingHeadphoneModelNumber = new FormControl('', [Validators.required, Validators.pattern(/\d/)]);
   editingHeadphoneWeight = new FormControl('', Validators.required);
   editingHeadphoneDate = new FormControl('', Validators.required);
 
-  constructor() { }
-
-  list(): Headphone[] {
-    return [
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' },
-      { id: new Date().getTime().toString(), editing: false, asin: '', batteries_type: '', date_first_available: 'None', item_model_number: (Math.random() * 100), item_weight: '12', manufacturer: '', product_dimensions: 'ASD' }
-    ];
-  }
+  constructor(
+    private readonly hService: HeadphonesService
+  ) { }
 
   ngOnInit(): void {
-    this.headphones = this.list();
+    this.headphones = this.hService.list();
+    this.paginationData.totalItems = this.headphones.length;
+    this.paginate();
+  }
+
+  paginate(): void {
+    const page = this.paginationData.currentPage;
+    const to = this.paginationData.itemsPerPage * page;
+
+    this.currentShowingHeadphones = this.headphones.slice(
+      page == 1 ? 0 : to - this.paginationData.itemsPerPage,
+      to
+    );
+  }
+
+  getCurrentPageInfo() {
+    return this.paginationData.currentPage == 1
+      ? 1
+      : (this.paginationData.currentPage * this.paginationData.itemsPerPage) - this.paginationData.itemsPerPage
+  }
+
+  getPageTo(): number {
+    return Math.min(this.paginationData.currentPage * this.paginationData.itemsPerPage, this.paginationData.totalItems);
   }
 
   show(headphone: Headphone): void { }
@@ -60,4 +74,33 @@ export class HeadphoneListComponent implements OnInit {
   cancelEdit(headphone: Headphone): void {
     headphone.editing = false;
   }
+
+  next(): void {
+    if (this.canGoNext()) {
+      this.paginationData.currentPage += 1;
+      this.paginate();
+    }
+  }
+  prev(): void {
+    if (this.canGoBack()) {
+      this.paginationData.currentPage -= 1;
+      this.paginate();
+    }
+  }
+
+  canGoNext(): boolean {
+    return this.paginationData.currentPage * this.paginationData.itemsPerPage < this.paginationData.totalItems;
+  }
+
+  canGoBack(): boolean {
+    return this.paginationData.currentPage > 1;
+  }
+
+}
+
+
+interface PaginationData {
+  currentPage: number;
+  totalItems: number;
+  itemsPerPage: number;
 }
