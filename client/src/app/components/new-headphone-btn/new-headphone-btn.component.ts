@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
 import { HeadphonesService } from 'src/app/services/headphones.service';
+import { AlertService } from 'src/app/services/alert.service';
 declare var $: any;
 
 const MODAL_ID = '#new-headphone-modal';
@@ -21,7 +22,8 @@ export class NewHeadphoneBtnComponent implements OnInit {
   manufacturer = new FormControl('', Validators.required);
 
   constructor(
-    private readonly hService: HeadphonesService
+    private readonly hService: HeadphonesService,
+    private readonly alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -50,11 +52,11 @@ export class NewHeadphoneBtnComponent implements OnInit {
       })
         .subscribe((response: any) => {
 
-          alert('Haedphone saved!');
+          this.alertService.toast('Haedphone saved!');
           this.closeModal();
 
         }, (err) => {
-          alert('Error saving headphone');
+          this.alertService.message('Error', 'Error saving headphone', 'error');
           console.log(err);
         });
     }

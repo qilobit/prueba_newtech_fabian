@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Headphone } from 'src/app/models/headphone.model';
 import { FormControl, Validators } from '@angular/forms';
 import { HeadphonesService } from 'src/app/services/headphones.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'headphone-list',
@@ -22,7 +23,8 @@ export class HeadphoneListComponent implements OnInit {
   editingHeadphoneDate = new FormControl('', Validators.required);
 
   constructor(
-    private readonly hService: HeadphonesService
+    private readonly hService: HeadphonesService,
+    private readonly alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -59,16 +61,21 @@ export class HeadphoneListComponent implements OnInit {
     this.editingHeadphoneModelNumber.setValue(headphone.item_model_number);
     this.editingHeadphoneWeight.setValue(headphone.item_weight);
     this.editingHeadphoneDate.setValue(headphone.date_first_available);
+
   }
 
-  delete(headphone: Headphone): void { }
+  async delete(headphone: Headphone): Promise<void> {
+    const ok = await this.alertService.confirm('The headphone will be deleted');
+    if (ok.isConfirmed) {
+      console.log('Drop it');
+    }
+  }
 
   update(headphone: Headphone): void {
     headphone.item_model_number = this.editingHeadphoneModelNumber.value;
     headphone.item_weight = this.editingHeadphoneWeight.value;
     headphone.date_first_available = this.editingHeadphoneDate.value;
     headphone.editing = false;
-
   }
 
   cancelEdit(headphone: Headphone): void {
