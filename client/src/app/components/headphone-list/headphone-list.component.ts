@@ -4,6 +4,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { HeadphonesService } from 'src/app/services/headphones.service';
 import { AlertService } from 'src/app/services/alert.service';
 
+declare var $: any;
+const READONLY_MODAL_REF = "#show-headphone-modal";
 @Component({
   selector: 'headphone-list',
   templateUrl: './headphone-list.component.html',
@@ -17,7 +19,7 @@ export class HeadphoneListComponent implements OnInit {
     itemsPerPage: 10,
     totalItems: 0
   };
-
+  currentHeadphone: Headphone;
   editingHeadphoneModelNumber = new FormControl('', [Validators.required, Validators.pattern(/\d/)]);
   editingHeadphoneWeight = new FormControl('', Validators.required);
   editingHeadphoneDate = new FormControl('', Validators.required);
@@ -52,8 +54,6 @@ export class HeadphoneListComponent implements OnInit {
   getPageTo(): number {
     return Math.min(this.paginationData.currentPage * this.paginationData.itemsPerPage, this.paginationData.totalItems);
   }
-
-  show(headphone: Headphone): void { }
 
   edit(headphone: Headphone): void {
     this.headphones.forEach(h => h.editing = false);
@@ -101,6 +101,16 @@ export class HeadphoneListComponent implements OnInit {
 
   canGoBack(): boolean {
     return this.paginationData.currentPage > 1;
+  }
+
+  closeReadonlyModal() {
+    this.currentHeadphone = null;
+    $(READONLY_MODAL_REF).modal('hide');
+  }
+
+  show(headphone: Headphone) {
+    this.currentHeadphone = headphone;
+    $(READONLY_MODAL_REF).modal('show');
   }
 
 }

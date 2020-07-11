@@ -59,6 +59,8 @@ export class NewHeadphoneBtnComponent implements OnInit {
           this.alertService.message('Error', 'Error saving headphone', 'error');
           console.log(err);
         });
+    } else {
+      this.alertService.toast('Please fill all required fields', 'warning');
     }
   }
 

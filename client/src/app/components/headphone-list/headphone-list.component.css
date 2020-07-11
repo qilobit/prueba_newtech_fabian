@@ -25,3 +25,7 @@ table {
 .custom-tr {
   border-bottom: solid 1px #ccc;
 }
+
+.badge {
+  padding: 5px 8px;
+}

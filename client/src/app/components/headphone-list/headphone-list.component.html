@@ -62,3 +62,32 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="show-headphone-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-heading">Headphone detail</h3>
+        <button type="button" class="close" (click)="closeReadonlyModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body">
+            <p><b>Model number:</b> {{ currentHeadphone?.item_model_number }}</p>
+            <p><b>Dimensions:</b> {{ currentHeadphone?.product_dimensions }}</p>
+            <p><b>Weight:</b> {{ currentHeadphone?.item_weight }}</p>
+            <p><b>Manufacturer:</b> {{ currentHeadphone?.manufacturer }}</p>
+            <p><b>ASIN:</b> {{ currentHeadphone?.asin }}</p>
+            <p><b>Batteries type:</b> {{ currentHeadphone?.batteries_type }}</p>
+            <p><b>Date first available: </b>{{ currentHeadphone?.date_first_available }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body text-right">
+        <button class="btn btn-secondary mr-2" (click)="closeReadonlyModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
