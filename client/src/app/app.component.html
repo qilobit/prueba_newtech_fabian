@@ -1,8 +1,8 @@
 <div class="container">
   <h2>Headphones manager</h2>
 
-  <new-headphone-btn></new-headphone-btn>
+  <new-headphone-btn (headphoneCreated)="getHeadphones()"></new-headphone-btn>
 
-  <headphone-list></headphone-list>
+  <headphone-list [headphones]="headphones" (headphoneAffected)="getHeadphones()"></headphone-list>
 
 </div>

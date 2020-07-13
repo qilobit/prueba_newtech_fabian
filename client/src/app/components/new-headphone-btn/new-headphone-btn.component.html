@@ -38,9 +38,9 @@
           <input type="text" [formControl]="asin" maxlength="40" class="form-control">
         </div>
         <div class="form-group col-sm-6">
-          <label for="">Batteries type</label><span *ngIf="batteriesType.touched && !batteriesType.valid"
+          <label for="">Batteries type</label><span *ngIf="batteiresType.touched && !batteiresType.valid"
             class="text-danger">Required</span>
-          <input type="text" [formControl]="batteriesType" maxlength="40" class="form-control">
+          <input type="text" [formControl]="batteiresType" maxlength="40" class="form-control">
         </div>
         <div class="form-group col-sm-6">
           <label for="">Date first available</label><span *ngIf="date.touched && !date.valid"
@@ -49,8 +49,8 @@
         </div>
       </div>
       <div class="modal-body text-right">
-        <button class="btn btn-secondary mr-2" (click)="closeModal()">Close</button>
-        <button class="btn btn-success" (click)="save()">Save</button>
+        <button class="btn btn-secondary mr-2" [disabled]="loading" (click)="closeModal()">Close</button>
+        <button class="btn btn-success" [disabled]="loading" (click)="save()">Save</button>
 
       </div>
     </div>

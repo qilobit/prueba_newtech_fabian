@@ -2,29 +2,41 @@
   <div class="card-body">
     <div class="table-header bg-info text-white">
       <div class="row">
-        <div class="col-sm-2 text-center p-1">Id</div>
-        <div class="col-sm-3 p-1">Model</div>
-        <div class="col-sm-2 text-center p-1">Weight</div>
-        <div class="col-sm-3 text-center p-1">Date available</div>
+        <div class="col-sm-1 text-center p-1">Id</div>
+        <div class="col-sm-2 p-1">Model</div>
+        <div class="col-sm-2 p-1">Manufacturer</div>
+        <div class="col-sm-1 text-center p-1">Weight</div>
+        <div class="col-sm-1 text-center p-1">ASIN</div>
+        <div class="col-sm-2 text-center p-1">Date available</div>
         <div class="col-sm-2"></div>
       </div>
     </div>
     <div class="table-body">
       <div class="row custom-tr" *ngFor="let item of currentShowingHeadphones">
-        <div class="col-sm-2 text-center p-1">{{ item.id }}</div>
-        <div class="col-sm-3 p-1">
-          <span *ngIf="!item.editing">{{ item.item_model_number }}</span>
-          <input *ngIf="item.editing" type="text" [value]="item.item_model_number"
+        <div class="col-sm-1 text-center p-1">{{ item.id }}</div>
+        <div class="col-sm-2 p-1">
+          <span *ngIf="!item.editing">{{ item.modelNumber }}</span>
+          <input *ngIf="item.editing" type="text" [value]="item.modelNumber" name="editingHeadphoneModelNumber"
             [formControl]="editingHeadphoneModelNumber" class="form-control inp-sm">
         </div>
-        <div class="col-sm-2 text-center p-1">
-          <span *ngIf="!item.editing">{{ item.item_weight }}</span>
-          <input *ngIf="item.editing" type="text" [value]="item.item_weight" [formControl]="editingHeadphoneWeight"
-            class="form-control">
+        <div class="col-sm-2 p-1">
+          <span *ngIf="!item.editing">{{ item.manufacturer }}</span>
+          <input *ngIf="item.editing" type="text" [value]="item.manufacturer" name="editingHeadphoneManufacturer"
+            [formControl]="editingHeadphoneManufacturer" class="form-control inp-sm">
         </div>
-        <div class="col-sm-3 p-1 text-center">
-          <span *ngIf="!item.editing">{{ item.date_first_available }}</span>
-          <input *ngIf="item.editing" type="text" [value]="item.date_first_available"
+        <div class="col-sm-1 text-center p-1">
+          <span *ngIf="!item.editing">{{ item.weight }}</span>
+          <input *ngIf="item.editing" type="text" [value]="item.weight" name="editingHeadphoneWeight"
+            [formControl]="editingHeadphoneWeight" class="form-control">
+        </div>
+        <div class="col-sm-1 p-1 text-center">
+          <span *ngIf="!item.editing">{{ item.asin }}</span>
+          <input *ngIf="item.editing" type="text" [value]="item.asin" name="editingHeadphoneASIN"
+            [formControl]="editingHeadphoneASIN" class="form-control">
+        </div>
+        <div class="col-sm-2 p-1 text-center">
+          <span *ngIf="!item.editing">{{ shortDate(item.dateFirstAvailable) }}</span>
+          <input *ngIf="item.editing" type="date" [value]="item.dateFirstAvailable" name="editingHeadphoneDate"
             [formControl]="editingHeadphoneDate" class="form-control">
         </div>
         <div class="col-sm-2">
@@ -75,13 +87,13 @@
       <div class="modal-body">
         <div class="card">
           <div class="card-body">
-            <p><b>Model number:</b> {{ currentHeadphone?.item_model_number }}</p>
-            <p><b>Dimensions:</b> {{ currentHeadphone?.product_dimensions }}</p>
-            <p><b>Weight:</b> {{ currentHeadphone?.item_weight }}</p>
+            <p><b>Model number:</b> {{ currentHeadphone?.modelNumber }}</p>
+            <p><b>Dimensions:</b> {{ currentHeadphone?.dimensions }}</p>
+            <p><b>Weight:</b> {{ currentHeadphone?.weight }}</p>
             <p><b>Manufacturer:</b> {{ currentHeadphone?.manufacturer }}</p>
             <p><b>ASIN:</b> {{ currentHeadphone?.asin }}</p>
-            <p><b>Batteries type:</b> {{ currentHeadphone?.batteries_type }}</p>
-            <p><b>Date first available: </b>{{ currentHeadphone?.date_first_available }}</p>
+            <p><b>Batteries type:</b> {{ currentHeadphone?.batteiresType }}</p>
+            <p><b>Date first available: </b>{{ currentHeadphone?.dateFirstAvailable }}</p>
           </div>
         </div>
       </div>

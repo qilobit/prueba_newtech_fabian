@@ -1,11 +1,11 @@
 export interface Headphone {
-  product_dimensions: string;
-  item_weight: string;
+  dimensions: string;
+  weight: string;
   manufacturer: string;
   asin: string;
-  item_model_number: number;
-  batteries_type: string;
-  date_first_available: string;
+  modelNumber: number;
+  batteiresType: string;
+  dateFirstAvailable: string;
   editing?: boolean;
   id?: string;
 }
