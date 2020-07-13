@@ -41,17 +41,24 @@
         </div>
         <div class="col-sm-2">
           <div *ngIf="item.editing">
-            <a href="#" (click)="update( item )" class="badge badge-success mr-2"><i class="fa fa-save"></i></a>
-            <a href="#" (click)="cancelEdit( item )" class="badge badge-secondary"><i class="fa fa-close"></i></a>
+            <button [disabled]="loading" (click)="update( item )" class="btn btn-success btn-sm mr-2"><i
+                class="fa fa-save"></i></button>
+            <button [disabled]="loading" (click)="cancelEdit( item )" class="btn btn-secondary btn-sm"><i
+                class="fa fa-close"></i></button>
           </div>
           <div *ngIf="!item.editing">
-            <a href="#" (click)="show( item )" class="badge badge-info mr-2"><i class="fa fa-eye"></i></a>
-            <a href="#" (click)="edit( item )" class="badge badge-warning mr-2"><i class="fa fa-edit"></i></a>
-            <a href="#" (click)="delete( item )" class="badge badge-danger "><i class="fa fa-trash"></i></a>
+            <button [disabled]="loading" (click)="show( item )" class="btn btn-info btn-sm mr-2"><i
+                class="fa fa-eye"></i></button>
+            <button [disabled]="loading" (click)="edit( item )" class="btn btn-warning btn-sm mr-2"><i
+                class="fa fa-edit"></i></button>
+            <button [disabled]="loading" (click)="delete( item )" class="btn btn-danger btn-sm "><i
+                class="fa fa-trash"></i></button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- PAGINATION -->
     <div class="table-pagination bg-default mt-2">
       <div class="row">
         <div class="col-sm-12 text-right mr-3">
@@ -75,6 +82,7 @@
   </div>
 </div>
 
+<!-- DETAIL MODAL -->
 <div class="modal fade" id="show-headphone-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">

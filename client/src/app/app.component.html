@@ -3,6 +3,9 @@
 
   <new-headphone-btn (headphoneCreated)="getHeadphones()"></new-headphone-btn>
 
-  <headphone-list [headphones]="headphones" (headphoneAffected)="getHeadphones()"></headphone-list>
+  <div *ngIf="loading" class="text-center">
+    <h3><i class="fa fa-refresh fa-spin"></i> Loading...</h3>
+  </div>
+  <headphone-list *ngIf="!loading" [headphones]="headphones" (headphoneAffected)="getHeadphones()"></headphone-list>
 
 </div>

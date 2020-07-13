@@ -16,6 +16,7 @@ export class HeadphoneListComponent implements OnInit {
   @Input() headphones: Headphone[] = [];
   @Output() headphoneAffected: EventEmitter<boolean> = new EventEmitter();
   currentShowingHeadphones: Headphone[] = [];
+  loading: boolean = false;
 
   paginationData: PaginationData = {
     currentPage: 1,
@@ -81,8 +82,13 @@ export class HeadphoneListComponent implements OnInit {
   async delete(headphone: Headphone): Promise<void> {
     const ok = await this.alertService.confirm('The headphone will be deleted');
     if (ok.isConfirmed) {
+      this.loading = true;
       this.hService.delete(headphone).subscribe(() => {
         this.headphoneAffected.emit(true);
+        this.loading = false;
+      }, (err) => {
+        this.alertService.message('Error', 'Error deleting headphone', 'error');
+        this.loading = false;
       });
     }
   }
@@ -94,6 +100,9 @@ export class HeadphoneListComponent implements OnInit {
     copy.dateFirstAvailable = this.editingHeadphoneDate.value;
     copy.asin = this.editingHeadphoneASIN.value;
     copy.manufacturer = this.editingHeadphoneManufacturer.value;
+
+    this.loading = true;
+
     this.hService.update(copy).subscribe(resp => {
       headphone.modelNumber = this.editingHeadphoneModelNumber.value;
       headphone.weight = this.editingHeadphoneWeight.value;
@@ -101,8 +110,11 @@ export class HeadphoneListComponent implements OnInit {
       headphone.manufacturer = this.editingHeadphoneManufacturer.value;
       headphone.asin = this.editingHeadphoneASIN.value;
       headphone.editing = false;
+
+      this.loading = false;
     }, (err) => {
       this.alertService.message('Error', 'Error undating headphone data', 'error');
+      this.loading = false;
     });
   }
 
